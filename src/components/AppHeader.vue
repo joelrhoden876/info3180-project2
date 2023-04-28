@@ -2,7 +2,8 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">VueJS with Flask</a>
+        <img class="icon" src="camera.png" alt="">
+        <a class="navbar-brand" href="/">Photogram</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -20,10 +21,16 @@
               <RouterLink to="/" class="nav-link active">Home</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/about">About</RouterLink>
+              <RouterLink class="nav-link" to="/explore">Explore</RouterLink>
             </li>
             <li class="nav-item">
+              <RouterLink class="nav-link" to="/users/currentuser">My Profile</RouterLink>
+            </li>
+            <li v-if="!token" class="nav-item">
               <RouterLink class="nav-link" to="/login">Login</RouterLink>
+            </li>
+            <li v-else class="nav-item">
+              <RouterLink class="nav-link" to="/logout" @click="logout">Logout</RouterLink>
             </li>
           </ul>
         </div>
@@ -33,9 +40,29 @@
 </template>
 
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+const router = useRouter()
+//auth token present or not
+const token = localStorage.getItem("token")
+console.log(token)
+
+const logout = () => {
+  localStorage.removeItem("token")
+  window.location.reload()
+}
+
 </script>
 
 <style>
 /* Add any component specific styles here */
+ .icon {
+  width: 20px;
+}
+
+/*.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} */
+
 </style>
